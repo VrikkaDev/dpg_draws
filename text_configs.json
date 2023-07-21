@@ -1,0 +1,82 @@
+{
+  "to_mc": {
+    "mc_player_verification": "Do you want to link discord user %s to this minecraft account? ",
+    "mc_link_account_button_yes": "Links your minecraft account to your discord account.",
+    "mc_link_account_button_no": "Doesn't link this minecraft account to said discord account",
+    "mc_link_account_yes_command": "Message sent to link the accounts.",
+    "mc_link_account_no_command": "Didn't link the accounts.",
+
+    "teams": {
+      "pickaxe": {
+        "suffix": {
+          "text": "⛏",
+          "color": "DARK_GRAY"
+        },
+        "name_color": "RED"
+      },
+      "sword": {
+        "suffix": {
+          "text": "\uD83D\uDDE1",
+          "color": "BLUE"
+        },
+        "name_color": "RED"
+      },
+      "bow": {
+        "suffix": {
+          "text": "\uD83C\uDFF9",
+          "color": "DARK_RED"
+        },
+        "name_color": "RED"
+      }
+    }
+  },
+
+  "dc": {
+
+    "responses": {
+      "player_not_in_server": "Player named {mc_name} was not found. Make sure you are connected to the minecraft server when trying to link accounts.",
+      "message_sent_to_player": "Message asking to link has been sent to {mc_name}. Please accept the verification in minecraft.",
+      "account_linked": "Account <@{discord_id}> successfully linked to {mc_name}",
+
+      "cant_connect_to_mc": "Couldn't connect to the minecraft server",
+
+      "added_to_team": "You have been added to team {team_name}",
+
+      "not_linked": "You haven't linked your account to your mc account. please go {link_channel} to link your account"
+    },
+
+    "link_account_text": {
+      "text": "To link your minecraft account, write your mc account name on this channel while being logged in the server.",
+      "embed": {
+        "title": "",
+        "link": "",
+        "color": "0xFF5733",
+        "embedded_description": ""
+      }
+    },
+    "select_team_text": {
+      "text": "Select one of these to join a team.",
+      "embed": {
+        "title": "",
+        "link": "",
+        "color": "0xFF5733",
+        "embedded_description": ""
+      }
+    },
+
+    "buttons": {
+      "pickaxe": {
+        "button_text": "⛏",
+        "button_color": "blurple"
+      },
+      "sword": {
+        "button_text": "\uD83D\uDDE1",
+        "button_color": "red"
+      },
+      "bow": {
+        "button_text": "\uD83C\uDFF9",
+        "button_color": "green"
+      }
+    }
+  }
+}
