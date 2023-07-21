@@ -1,0 +1,30 @@
+{
+	"schemaVersion": 1,
+	"id": "dpgdraws-discord",
+	"version": "${version}",
+	"name": "DPGdraws-discord-connect",
+	"description": "This is a mod for DPG_DRAWS",
+	"authors": [
+		"VrikkaDuck"
+	],
+	"contact": {
+		"homepage": "https://github.com/VrikkaDev"
+	},
+	"license": "GNU",
+	"icon": "assets/dpgdraws-discord/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.VrikkaDuck.dpgdrawsdiscord.DPGdrawsDiscord"
+		]
+	},
+	"mixins": [
+		"dpgdraws-discord.mixins.json"
+	],
+	"depends": {
+		"fabricloader": "*",
+		"minecraft": "~1.20.1",
+		"java": ">=15",
+		"fabric-api": "*"
+	}
+}
