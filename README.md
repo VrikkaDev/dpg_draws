@@ -22,7 +22,6 @@ Before running the bot, you need to set up some configuration parameters in the 
    - `PUBLIC_KEY`: Replace this with the public key of your Discord bot. The public key is used for interactions with Discord's Interaction API.
    - `bot_activity_type`: The type of bot activity (1 for playing, 2 for streaming, 3 for listening, 4 for watching).
    - `bot_activity_text`: The text that will be displayed as the bot's activity status (e.g., "Minecraft").
-   - `link_minecraft_channel`: The ID of the Discord channel where players can link their Minecraft accounts. Replace this with the channel ID where you want users to send their Minecraft account names for linking.
    - `team_select_channel`: The ID of the Discord channel where players can select their teams. Replace this with the channel ID where you want team selection buttons to be displayed.
 
 3. Save the `.env` file after making the changes.
@@ -74,19 +73,7 @@ The bot uses a configuration file named `text_configs.json` to manage text messa
 
       "cant_connect_to_mc": "Couldn't connect to the minecraft server",
 
-      "added_to_team": "You have been added to team {team_name}",
-
-      "not_linked": "You haven't linked your account to your mc account. please go {link_channel} to link your account"
-    },
-
-    "link_account_text": {
-      "text": "To link your minecraft account, write your mc account name on this channel while being logged in the server.",
-      "embed": {
-        "title": "",
-        "link": "",
-        "color": "0xFF5733",
-        "embedded_description": ""
-      }
+      "added_to_team": "You have been added to team {team_name}"
     },
     "select_team_text": {
       "text": "Select one of these to join a team.",
@@ -129,27 +116,25 @@ The bot uses a configuration file named `text_configs.json` to manage text messa
 
     responses: Contains response messages for various actions, such as linking, team joining, and errors.
 
-    link_account_text: The message template for instructing users to link their Minecraft accounts.
-
     select_team_text: The message template for instructing users to select a team.
 
     buttons: Contains configurations for emoji buttons used for team selection. You can customize the emoji and button color for each team.
 
 Make sure to save the text_configs.json file after making changes.
 
-How to Use
+### How to Use
 
 Once the bot is up and running, it will be online and ready to handle commands and interactions in the configured Discord server.
 
 Linking Minecraft Account:
 
-    To link your Minecraft account to Discord, write your Minecraft account name in the designated channel while being logged in to the Minecraft server.
+    To link your Minecraft account to Discord, try joining a team, then write your Minecraft account name in the textbox while being logged in to the Minecraft server.
 
 Selecting a Team:
 
     In the team selection channel, click on the corresponding emoji button to join a team.
 
-Bot Commands:
+#### Bot Commands:
 
 The bot supports various commands for managing teams and accounts. Use the / prefix followed by the command name to trigger the commands.
 

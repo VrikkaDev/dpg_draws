@@ -53,9 +53,10 @@ class KeepAlivePacket(Packet):
 
 
 class LinkAccountPacket(Packet):
-    def __init__(self, message: discord.Message):
-        self.message = message
-        a = {"discord_id": message.author.id, "discord_name": message.author.name, "minecraft_name": message.content}
+    def __init__(self, interaction: discord.Interaction, mc_name: str):
+        self.interaction = interaction
+        self.mc_name = mc_name
+        a = {"discord_id": interaction.user.id, "discord_name": interaction.user.name, "minecraft_name": mc_name}
         super().__init__("link_account", a)
 
     def ProcessResponse(self, response: str):
@@ -67,9 +68,9 @@ class LinkAccountPacket(Packet):
             return True
 
         replyText: str = json_to_dict("text_configs.json")["dc"]["responses"][responseJson['data']['response']]
-        replyText = replyText.format(mc_name=self.message.content)
+        replyText = replyText.format(mc_name=self.mc_name)
 
-        asyncio.run_coroutine_threadsafe(self.message.reply(replyText), bot.loop)
+        asyncio.run_coroutine_threadsafe(self.interaction.response.send_message(content=replyText, ephemeral=True), bot.loop)
 
         return True
 

@@ -18,15 +18,10 @@ class MinecraftCog(commands.Cog):
 
     async def GenMessages(self):
         btn_channel: discord.TextChannel = self.bot.get_channel(int(ConfigUtils.team_select_channel))
-        link_channel: discord.TextChannel = self.bot.get_channel(int(ConfigUtils.link_mc_channel))
 
         await MessageUtils.del_all_messages_on_channel(btn_channel, whitelist=[self.bot.user.id])
-        await MessageUtils.del_all_messages_on_channel(link_channel)
 
         d = FileUtils.json_to_dict("text_configs.json")
-
-        lt = MessageUtils.GenerateMessage(d["dc"]["link_account_text"])
-        await link_channel.send(content=lt[0], embed=lt[1])
 
         vi: discord.ui.View = discord.ui.View()
 
@@ -51,21 +46,6 @@ class MinecraftCog(commands.Cog):
         return True
 
     @commands.Cog.listener()
-    async def on_message(self, message: discord.Message):
-        if len(message.content) > 16:
-            return
-        if message.author.bot:
-            return
-        if int(message.channel.id) == int(ConfigUtils.link_mc_channel):
-
-            if not NetworkUtils.isAlive:
-                await message.reply(
-                    content=FileUtils.json_to_dict("text_configs.json")["dc"]["responses"]["cant_connect_to_mc"])
-                return
-
-            send_packet(LinkAccountPacket(message))
-
-    @commands.Cog.listener()
     async def on_interaction(self, interaction: discord.Interaction):
         if interaction.type == discord.InteractionType.component:
             cus_id = interaction.data.get('custom_id')
@@ -73,17 +53,11 @@ class MinecraftCog(commands.Cog):
             js = FileUtils.json_to_dict("text_configs.json")
             buttons: dict = js["dc"]["buttons"]
 
-            tex: discord.ui.TextInput = discord.ui.TextInput(label="lolzika", style=discord.TextStyle.short,
-                                                             placeholder="yes?", default="yes/no", required=True)
-
             for tea in buttons.keys():
                 if cus_id == "team" + tea:
 
                     if not LinkingHandler.linking_handler.Has_profile(interaction.user.id):
-                        rest: str = js["dc"]["responses"]["not_linked"]
-                        lc: discord.TextChannel = self.bot.get_channel(int(ConfigUtils.link_mc_channel))
-                        await interaction.response.send_message(content=rest.format(link_channel=lc.mention),
-                                                                ephemeral=True)
+                        await interaction.response.send_modal(InputModal())
                         return
 
                     self.SetTeam(interaction.user, tea)
@@ -92,3 +66,20 @@ class MinecraftCog(commands.Cog):
 
                     break
         return
+
+
+class InputModal(discord.ui.Modal, title="Account linking"):
+    answer: discord.ui.TextInput = discord.ui.TextInput(label="Minecraft account", style=discord.TextStyle.short,
+                                                        placeholder="minecraft username", required=True,
+                                                        max_length=16)
+
+    async def on_submit(self, interaction: discord.Interaction):
+        embb: discord.Embed = discord.Embed()
+        embb.description = f"**{self.answer.label}**\n{self.answer}"
+        embb.set_author(name=interaction.user, icon_url=interaction.user.avatar)
+
+        if not NetworkUtils.isAlive:
+            await interaction.response.send_message(content=FileUtils.json_to_dict("text_configs.json")["dc"]["responses"]["cant_connect_to_mc"], ephemeral=True)
+            return
+
+        NetworkUtils.send_packet(LinkAccountPacket(interaction, self.answer.value))

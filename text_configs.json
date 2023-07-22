@@ -40,20 +40,9 @@
 
       "cant_connect_to_mc": "Couldn't connect to the minecraft server",
 
-      "added_to_team": "You have been added to team {team_name}",
-
-      "not_linked": "You haven't linked your account to your mc account. please go {link_channel} to link your account"
+      "added_to_team": "You have been added to team {team_name}"
     },
 
-    "link_account_text": {
-      "text": "",
-      "embed": {
-        "title": "**To link your minecraft account, write your mc account name on this channel while being logged in the server.**",
-        "link": "",
-        "color": "0x309bff",
-        "embedded_description": ""
-      }
-    },
     "select_team_text": {
       "text": "Select one of these to join a team.",
       "embed": {
