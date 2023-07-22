@@ -3,10 +3,10 @@ import threading
 import discord
 from discord.ext import commands, tasks
 
-from src import LinkingHandler
-from src.Packets.Packet import *
-from src.Utils import ConfigUtils, MessageUtils, FileUtils, NetworkUtils
-from src.Utils.NetworkUtils import send_packet, _keep_alive_thread_
+from Packets.Packet import *
+from Utils import ConfigUtils, MessageUtils, FileUtils, NetworkUtils
+from Utils.NetworkUtils import send_packet, _keep_alive_thread_
+import LinkingHandler
 
 
 class MinecraftCog(commands.Cog):
@@ -43,6 +43,9 @@ class MinecraftCog(commands.Cog):
     def send_packet(self, packet):
         NetworkUtils.send_packet(packet)
 
+    def get_linking_handler(self):
+        return LinkingHandler.linking_handler
+
     def SetTeam(self, user: discord.User, team: str) -> bool:
         LinkingHandler.linking_handler.Set_team(user.id, team)
         return True
@@ -56,7 +59,8 @@ class MinecraftCog(commands.Cog):
         if int(message.channel.id) == int(ConfigUtils.link_mc_channel):
 
             if not NetworkUtils.isAlive:
-                await message.reply(content=FileUtils.json_to_dict("text_configs.json")["dc"]["responses"]["cant_connect_to_mc"])
+                await message.reply(
+                    content=FileUtils.json_to_dict("text_configs.json")["dc"]["responses"]["cant_connect_to_mc"])
                 return
 
             send_packet(LinkAccountPacket(message))
@@ -69,13 +73,17 @@ class MinecraftCog(commands.Cog):
             js = FileUtils.json_to_dict("text_configs.json")
             buttons: dict = js["dc"]["buttons"]
 
+            tex: discord.ui.TextInput = discord.ui.TextInput(label="lolzika", style=discord.TextStyle.short,
+                                                             placeholder="yes?", default="yes/no", required=True)
+
             for tea in buttons.keys():
                 if cus_id == "team" + tea:
 
                     if not LinkingHandler.linking_handler.Has_profile(interaction.user.id):
                         rest: str = js["dc"]["responses"]["not_linked"]
                         lc: discord.TextChannel = self.bot.get_channel(int(ConfigUtils.link_mc_channel))
-                        await interaction.response.send_message(content=rest.format(link_channel=lc.mention), ephemeral=True)
+                        await interaction.response.send_message(content=rest.format(link_channel=lc.mention),
+                                                                ephemeral=True)
                         return
 
                     self.SetTeam(interaction.user, tea)

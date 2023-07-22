@@ -6,10 +6,10 @@ import MinecraftCog
 import discord
 from discord.ext import commands
 
-from src import LinkingHandler
-from src.Packets.Packet import ConnectPacket
-from src.Utils import ConfigUtils, MessageUtils
-from src.Utils.NetworkUtils import send_packet, Packet
+import LinkingHandler
+from Packets.Packet import ConnectPacket
+from Utils import ConfigUtils, MessageUtils
+from Utils.NetworkUtils import send_packet, Packet
 
 if __name__ == '__main__':
 
@@ -32,10 +32,6 @@ if __name__ == '__main__':
     async def on_ready():
         LinkingHandler.Init()
 
-        # LinkingHandler.linking_handler.Add_profile(2319873129, "disc_name", "mc_name", "datasolike teamnstuff")
-        # LinkingHandler.linking_handler.Add_profile(1231238032, "lolzika", "nolol", "hehhhehehehe")
-        # LinkingHandler.linking_handler.Add_profile(331888510363631639, "vrikkaduck", "vrikkaduck", "{}")
-
         await bot.add_cog(MinecraftCog.MinecraftCog(bot))
         minecraftCog: MinecraftCog.MinecraftCog = bot.get_cog("MinecraftCog")
         await minecraftCog.GenMessages()
@@ -43,7 +39,7 @@ if __name__ == '__main__':
         # s = await tree.sync(guild=discord.Object(id=ConfigUtils.DISCORD_GUILD))
 
         ac = [ConfigUtils.bot_activity_text, ConfigUtils.bot_activity_type]
-        activity = discord.Activity(name=ac[0], type=discord.ActivityType.playing)
+        activity = discord.Activity(name=ac[0], type=discord.ActivityType(value=int(ac[1])))
 
         await bot.change_presence(status=discord.Status.online, activity=activity)
 

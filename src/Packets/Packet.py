@@ -5,10 +5,8 @@ from abc import ABC, abstractmethod
 
 import discord.ext.commands
 
-from src import LinkingHandler
-from src.Utils import ConfigUtils
-from src.Utils.FileUtils import json_to_dict
-import src.Utils.ConfigUtils
+from Utils import ConfigUtils
+from Utils.FileUtils import json_to_dict
 
 
 class Packet:
@@ -63,7 +61,7 @@ class LinkAccountPacket(Packet):
     def ProcessResponse(self, response: str):
         responseJson = json.loads(response)
 
-        bot: discord.ext.commands.Bot = src.Utils.ConfigUtils.bot
+        bot: discord.ext.commands.Bot = ConfigUtils.bot
 
         if not responseJson['success']:
             return True
@@ -86,7 +84,7 @@ class VerifyLinkingPacket(Packet):
 
         js: dict = json.loads(response)
 
-        LinkingHandler.linking_handler.Add_profile(int(js["discord_id"]), js["discord_name"], js["minecraft_name"], "{}")
+        ConfigUtils.bot.get_cog("MinecraftCog").get_linking_handler().Add_profile(int(js["discord_id"]), js["discord_name"], js["minecraft_name"], "{}")
 
         replyText: str = json_to_dict("text_configs.json")["dc"]["responses"]["account_linked"]
         replyText = replyText.format(discord_id=js["discord_id"], mc_name=js["minecraft_name"])
@@ -100,7 +98,7 @@ class VerifyLinkingPacket(Packet):
 
 class PlayerDataPacket(Packet):
     def __init__(self):
-        data = LinkingHandler.linking_handler.Get_full_dict()
+        data = ConfigUtils.bot.get_cog("MinecraftCog").get_linking_handler().Get_full_dict()
         super().__init__("player_data", data)
 
     def ProcessResponse(self, response: str):

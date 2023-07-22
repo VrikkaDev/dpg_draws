@@ -1,9 +1,7 @@
 import socket
-import json
 import threading
-import time
 
-from src.Packets.Packet import *
+from Packets.Packet import *
 
 # Define the IP address and port number of the Minecraft mod
 MINECRAFT_MOD_IP = '127.0.0.1'  # Update with the actual IP address

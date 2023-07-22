@@ -41,11 +41,10 @@ def GenerateMessage(jsondict: dict) -> [str, discord.Embed]:
 
     if 'color' in ev.keys():
         c: str = ev['color']
-        c = c[1:]  # remove "#" from the hex
         if len(c) < 1:
             e.colour = discord.Color.blue()
         else:
-            e.colour = discord.Color(int(c))
+            e.colour = discord.Color(int(c, 16))
 
     if 'embedded_description' in ev.keys():
         e.description = ev['embedded_description']

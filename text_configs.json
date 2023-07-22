@@ -46,11 +46,11 @@
     },
 
     "link_account_text": {
-      "text": "To link your minecraft account, write your mc account name on this channel while being logged in the server.",
+      "text": "",
       "embed": {
-        "title": "",
+        "title": "**To link your minecraft account, write your mc account name on this channel while being logged in the server.**",
         "link": "",
-        "color": "0xFF5733",
+        "color": "0x309bff",
         "embedded_description": ""
       }
     },
@@ -59,7 +59,7 @@
       "embed": {
         "title": "",
         "link": "",
-        "color": "0xFF5733",
+        "color": "0x309bff",
         "embedded_description": ""
       }
     },

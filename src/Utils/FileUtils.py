@@ -1,6 +1,7 @@
-import os
 import json
-from src.Utils.ConfigUtils import GetProjectRoot
+import os
+
+from Utils.ConfigUtils import GetProjectRoot
 
 
 def json_to_dict(json_file_path):

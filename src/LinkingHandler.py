@@ -2,8 +2,8 @@ import json
 
 import discord.ext.commands
 
-from src.Packets.Packet import PlayerDataPacket
-from src.Utils import FileUtils, ConfigUtils, NetworkUtils
+from Packets.Packet import PlayerDataPacket
+from Utils import FileUtils, ConfigUtils, NetworkUtils
 
 
 class Profile:
