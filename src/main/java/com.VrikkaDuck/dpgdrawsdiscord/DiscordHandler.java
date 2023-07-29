@@ -5,6 +5,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import io.netty.buffer.Unpooled;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.server.MinecraftServer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -48,6 +50,16 @@ public class DiscordHandler extends Thread {
 
         public void run() {
             try {
+
+                if (Variables.configHandler == null){
+                    MinecraftServer server = (MinecraftServer) FabricLoader.getInstance().getGameInstance();
+
+                    if (server == null){
+                        throw new NullPointerException();
+                    }
+
+                    Variables.configHandler = new ConfigHandler(server);
+                }
 
                 out = new PrintWriter(clientSocket.getOutputStream(), true);
                 in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));

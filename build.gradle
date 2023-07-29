@@ -11,7 +11,8 @@ base {
 }
 
 repositories {
-
+	mavenCentral()
+	maven { url = "https://repo.viaversion.com/" }
 }
 
 loom {
@@ -31,6 +32,8 @@ dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+	compileOnlyApi("com.viaversion:viaversion-api:4.7.0")
 
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 }
