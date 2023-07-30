@@ -45,10 +45,14 @@ public class ConfigHandler {
                     t = sb.addTeam(entry.getKey());
                 }
                 JsonObject val = entry.getValue().getAsJsonObject();
-                JsonObject suffix = val.getAsJsonObject("suffix");
-                Formatting col = Formatting.byName(suffix.get("color").getAsString());
-                t.setColor(Formatting.byName(val.get("name_color").getAsString()));
-                t.setSuffix(Text.of(" " + suffix.get("text").getAsString()).getWithStyle(Style.EMPTY.withColor(col)).get(0));
+                if(val.has("suffix")){
+                    JsonObject suffix = val.getAsJsonObject("suffix");
+                    Formatting col = Formatting.byName(suffix.get("color").getAsString());
+                    t.setSuffix(Text.of(" " + suffix.get("text").getAsString()).getWithStyle(Style.EMPTY.withColor(col)).get(0));
+                }
+                if(val.has("name_color")){
+                    t.setColor(Formatting.byName(val.get("name_color").getAsString()));
+                }
                 this.teams.put(entry.getKey(), t);
             }
         }
