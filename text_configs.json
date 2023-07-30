@@ -7,26 +7,35 @@
     "mc_link_account_no_command": "Didn't link the accounts.",
 
     "teams": {
-      "pickaxe": {
-        "suffix": {
-          "text": "⛏",
-          "color": "DARK_GRAY"
+      "spec": {
+        "none": {
+          "avaiable_colors": "BLACK, DARK_BLUE, DARK_GREEN, DARK_AQUA, DARK_RED, DARK_PURPLE, GOLD, GRAY, DARK_GRAY, BLUE, GREEN, AQUA, RED, LIGHT_PURPLE, YELLOW, WHITE"
         },
-        "name_color": "RED"
+        "builder": {
+          "name_color": "GREEN"
+        },
+        "redstoner": {
+          "name_color": "RED"
+        }
       },
-      "sword": {
-        "suffix": {
-          "text": "\uD83D\uDDE1",
-          "color": "BLUE"
+
+      "pvp": {
+        "pvpnone": {
+        "none": "none"
         },
-        "name_color": "RED"
-      },
-      "bow": {
-        "suffix": {
-          "text": "\uD83C\uDFF9",
-          "color": "DARK_RED"
+        "activepvp": {
+          "suffix": {
+            "text": "\uD83D\uDDE1",
+            "color": "BLUE"
+          }
         },
-        "name_color": "RED"
+        "nonactivepvp": {
+          "suffix": {
+            "text": "\uD83C\uDFF9",
+            "color": "DARK_GRAY"
+          }
+
+        }
       }
     }
   },
@@ -43,8 +52,17 @@
       "added_to_team": "You have been added to team {team_name}"
     },
 
-    "select_team_text": {
-      "text": "Select one of these to join a team.",
+    "select_spec_text": {
+      "text": "Select your speciality.",
+      "embed": {
+        "title": "",
+        "link": "",
+        "color": "0x309bff",
+        "embedded_description": ""
+      }
+    },
+    "select_pvp_text": {
+      "text": "Select your pvp activeness",
       "embed": {
         "title": "",
         "link": "",
@@ -54,18 +72,39 @@
     },
 
     "buttons": {
-      "pickaxe": {
-        "button_text": "⛏",
-        "button_color": "blurple"
+      "speciality": {
+        "none": {
+          "button_text": "✖",
+          "button_color": "red",
+          "avaiable_colors": "blurple, grey, gray, green, red"
+        },
+        "builder": {
+          "button_text": "Builder",
+          "button_color": "green"
+        },
+        "redstoner": {
+          "button_text": "Redstoner",
+          "button_color": "red"
+        }
       },
-      "sword": {
-        "button_text": "\uD83D\uDDE1",
-        "button_color": "red"
-      },
-      "bow": {
-        "button_text": "\uD83C\uDFF9",
-        "button_color": "green"
+      "pvp_activeness": {
+        "pvpnone": {
+          "button_text": "✖",
+          "button_color": "red",
+          "avaiable_colors": "blurple, grey, gray, green, red"
+        },
+        "activepvp": {
+          "button_text": "\uD83D\uDDE1",
+          "button_color": "blurple"
+        },
+        "nonactivepvp": {
+          "button_text": "\uD83C\uDFF9",
+          "button_color": "grey"
+        }
       }
+
     }
+
   }
+
 }

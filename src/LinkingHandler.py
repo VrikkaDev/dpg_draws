@@ -10,9 +10,9 @@ class Profile:
     discord_id: str
     discord_name: str
     minecraft_name: str
-    data: str = "{}"
+    data: dict
 
-    def __init__(self, discord_id: str, discord_name: str, minecraft_name: str, data: str):
+    def __init__(self, discord_id: str, discord_name: str, minecraft_name: str, data: dict):
         self.discord_name = discord_name
         self.minecraft_name = minecraft_name
         self.data = data
@@ -55,9 +55,14 @@ class Linking_Handler:
 
         return d
 
-    def Set_team(self, discord_id: int, team: str):
+    def Set_spec(self, discord_id: int, team: str):
         prof = self.Get_profile(discord_id)
-        prof.data = {"team": team}
+        prof.data["spec"] = team
+        self.Set_profile(prof)
+
+    def Set_pvp(self, discord_id: int, pvp: str):
+        prof = self.Get_profile(discord_id)
+        prof.data["pvp"] = pvp
         self.Set_profile(prof)
 
     def Has_profile(self, discord_id: int) -> bool:
