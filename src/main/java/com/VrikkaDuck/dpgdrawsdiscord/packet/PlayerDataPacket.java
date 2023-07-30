@@ -24,6 +24,10 @@ public class PlayerDataPacket extends Packet{
 
         MinecraftServer server = Variables.configHandler.server;
 
+        if(server == null){
+            return;
+        }
+
         for(ServerPlayerEntity playerEntity : server.getPlayerManager().getPlayerList()){
             String tm = "";
 
@@ -38,11 +42,14 @@ public class PlayerDataPacket extends Packet{
                 return;
             }
 
-            JsonObject ob = JsonUtils.String2Json(tm);
+            JsonObject dataobj = JsonUtils.String2Json(tm);
 
-            assert ob != null;
-            if(ob.has("team")){
-                Variables.configHandler.SetTeam(playerEntity, ob.get("team").getAsString());
+            assert dataobj != null;
+            if(dataobj.has("spec")){
+                Variables.configHandler.SetSpec(playerEntity, dataobj.get("spec").getAsString());
+            }
+            if(dataobj.has("pvp")){
+                Variables.configHandler.SetPvp(playerEntity, dataobj.get("pvp").getAsString());
             }
         }
     }

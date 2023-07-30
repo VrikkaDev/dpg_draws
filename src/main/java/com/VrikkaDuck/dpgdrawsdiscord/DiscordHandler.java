@@ -51,7 +51,7 @@ public class DiscordHandler extends Thread {
                     MinecraftServer server = (MinecraftServer) FabricLoader.getInstance().getGameInstance();
 
                     if (server == null){
-                        throw new NullPointerException();
+                        return;
                     }
 
                     Variables.configHandler = new ConfigHandler(server);
