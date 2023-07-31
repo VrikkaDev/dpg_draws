@@ -1,3 +1,4 @@
+import logging
 import socket
 import threading
 
@@ -32,7 +33,7 @@ def _send_packet_thread_(packet: Packet):
     except ConnectionRefusedError as e:
         return False
     except ConnectionResetError as e:
-        print(e)
+        logging.info(e)
 
 
 def send_packet(packet: Packet):
@@ -55,12 +56,12 @@ def _keep_alive_thread_():
 
         if isAlive and not connect_packet_sent:
             if _send_packet_thread_(ConnectPacket()):
-                print("Connected to minecraft server.")
+                logging.info("Connected to minecraft server.")
                 connect_packet_sent = True
 
         if not isAlive:
             connect_packet_sent = False
-            print("Trying to connect to minecraft server...")
+            logging.info("Trying to connect to minecraft server...")
 
         time.sleep(2 if isAlive else 10)
 

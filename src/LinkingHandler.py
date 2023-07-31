@@ -1,4 +1,5 @@
 import json
+import logging
 
 import discord.ext.commands
 
@@ -76,7 +77,7 @@ class Linking_Handler:
     def Get_profile(self, discord_id: int) -> Profile:
 
         if not self.Has_profile(discord_id):
-            print("No profile with id " + str(discord_id) + " was found")
+            logging.info("No profile with id " + str(discord_id) + " was found")
             return None
 
         return self.profiles[str(discord_id)]

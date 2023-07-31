@@ -1,4 +1,6 @@
 import os
+import sys
+
 from dotenv import load_dotenv
 
 import MinecraftCog
@@ -11,7 +13,19 @@ from Packets.Packet import ConnectPacket
 from Utils import ConfigUtils, MessageUtils
 from Utils.NetworkUtils import send_packet, Packet
 
+import logging
+
 if __name__ == '__main__':
+
+    try:
+        open('latest.log', 'w').close()
+    except FileExistsError as e:
+        logging.info(e)
+
+    logging.basicConfig(filename='latest.log', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p',
+                        level=logging.NOTSET, force=True)
+
+    logging.getLogger().addHandler(logging.StreamHandler(sys.stdout))
 
     load_dotenv(dotenv_path=".env")
     TOKEN = os.getenv('DISCORD_TOKEN')
@@ -43,6 +57,7 @@ if __name__ == '__main__':
 
         await bot.change_presence(status=discord.Status.online, activity=activity)
 
-        print(f'{bot.user} is connected and running')
+        logging.info(f'{bot.user} is connected and running')
+
 
     bot.run(TOKEN)
