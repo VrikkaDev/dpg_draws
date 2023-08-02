@@ -85,14 +85,14 @@ class VerifyLinkingPacket(Packet):
 
         js: dict = json.loads(response)
 
-        ConfigUtils.bot.get_cog("MinecraftCog").get_linking_handler().Add_profile(int(js["discord_id"]), js["discord_name"], js["minecraft_name"], "{}")
+        ConfigUtils.bot.get_cog("MinecraftCog").get_linking_handler().Add_profile(int(js["discord_id"]), js["discord_name"], js["minecraft_name"])
 
         replyText: str = json_to_dict("text_configs.json")["dc"]["responses"]["account_linked"]
         replyText = replyText.format(discord_id=js["discord_id"], mc_name=js["minecraft_name"])
 
         bot: discord.ext.commands.Bot = ConfigUtils.bot
 
-        asyncio.run_coroutine_threadsafe(bot.get_channel(int(ConfigUtils.link_mc_channel)).send(content=replyText), bot.loop)
+        asyncio.run_coroutine_threadsafe(bot.get_channel(int(ConfigUtils.team_select_channel)).send(content=replyText), bot.loop)
 
         return True
 

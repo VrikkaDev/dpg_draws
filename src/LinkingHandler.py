@@ -58,11 +58,17 @@ class Linking_Handler:
 
     def Set_spec(self, discord_id: int, team: str):
         prof = self.Get_profile(discord_id)
+
+        if type(prof.data) == type(str):
+            prof.data = json.loads(prof.data)
         prof.data["spec"] = team
         self.Set_profile(prof)
 
     def Set_pvp(self, discord_id: int, pvp: str):
         prof = self.Get_profile(discord_id)
+
+        if type(prof.data) == type(str):
+            prof.data = json.loads(prof.data)
         prof.data["pvp"] = pvp
         self.Set_profile(prof)
 
@@ -82,12 +88,12 @@ class Linking_Handler:
 
         return self.profiles[str(discord_id)]
 
-    def Add_profile(self, discord_id: int, discord_name: str, minecraft_name: str, data: str):
+    def Add_profile(self, discord_id: int, discord_name: str, minecraft_name: str):
 
         if self.Has_profile(discord_id):
             return
 
-        prof = Profile(str(discord_id), discord_name, minecraft_name, data)
+        prof = Profile(str(discord_id), discord_name, minecraft_name, {})
         self.profiles[str(discord_id)] = prof
         self._save_to_file_()
         return
