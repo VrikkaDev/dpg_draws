@@ -92,7 +92,9 @@ class VerifyLinkingPacket(Packet):
 
         bot: discord.ext.commands.Bot = ConfigUtils.bot
 
-        asyncio.run_coroutine_threadsafe(bot.get_channel(int(ConfigUtils.team_select_channel)).send(content=replyText), bot.loop)
+        # asyncio.run_coroutine_threadsafe(bot.get_channel(int(ConfigUtils.team_select_channel)).send(content=replyText), bot.loop)
+
+        asyncio.run_coroutine_threadsafe(bot.get_user(int(js["discord_id"])).send(content=replyText), bot.loop)
 
         return True
 

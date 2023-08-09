@@ -44,6 +44,7 @@ if __name__ == '__main__':
 
     @bot.event
     async def on_ready():
+
         LinkingHandler.Init()
 
         await bot.add_cog(MinecraftCog.MinecraftCog(bot))

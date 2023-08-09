@@ -20,7 +20,8 @@ class Profile:
         self.discord_id = discord_id
 
     def ToDict(self) -> dict:
-        return {"discord_id": self.discord_id, "discord_name": self.discord_name, "minecraft_name": self.minecraft_name, "data": self.data}
+        return {"discord_id": self.discord_id, "discord_name": self.discord_name, "minecraft_name": self.minecraft_name,
+                "data": self.data}
 
 
 class Linking_Handler:
@@ -55,6 +56,16 @@ class Linking_Handler:
             d[p] = v
 
         return d
+
+    def Add_spec(self, discord_id: int, team: str):
+        prof = self.Get_profile(discord_id)
+
+        if type(prof.data) == type(str):
+            prof.data = json.loads(prof.data)
+
+        if team not in prof.data["spec"]:
+            prof.data["spec"] += "," + team
+            self.Set_profile(prof)
 
     def Set_spec(self, discord_id: int, team: str):
         prof = self.Get_profile(discord_id)

@@ -50,7 +50,10 @@ class MinecraftCog(commands.Cog):
 
     def SetTeam(self, user: discord.User, team: str, c_id: str) -> bool:
         if "spec_" in c_id:
-            LinkingHandler.linking_handler.Set_spec(user.id, team)
+            if "none" in team:
+                LinkingHandler.linking_handler.Set_spec(user.id, team)
+            else:
+                LinkingHandler.linking_handler.Add_spec(user.id, team)
             return True
         LinkingHandler.linking_handler.Set_pvp(user.id, team)
 
