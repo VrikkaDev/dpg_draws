@@ -18,6 +18,9 @@
 			"com.VrikkaDuck.dpgdrawsdiscord.DPGdrawsDiscord"
 		]
 	},
+	"mixins": [
+		"dpgdraws-discord.mixins.json"
+	],
 	"depends": {
 		"fabricloader": "*",
 		"minecraft": "~1.20.1",

@@ -22,7 +22,6 @@ public class VerifyCommand {
                 );
     }
     private static int Verify(CommandContext<ServerCommandSource> context){
-
         if(BoolArgumentType.getBool(context, "agree")){
             context.getSource().sendMessage(Text.of(Variables.TRANSLATIONS.get("mc_link_account_yes_command")));
         }else{

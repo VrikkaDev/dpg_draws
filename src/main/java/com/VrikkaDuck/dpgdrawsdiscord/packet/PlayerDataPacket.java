@@ -8,7 +8,6 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 import java.util.Map;
-import java.util.Objects;
 
 public class PlayerDataPacket extends Packet{
     public PlayerDataPacket(String type, JsonObject data){

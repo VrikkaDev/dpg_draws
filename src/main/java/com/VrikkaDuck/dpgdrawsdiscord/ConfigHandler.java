@@ -1,32 +1,24 @@
 package com.VrikkaDuck.dpgdrawsdiscord;
 
-import com.google.gson.*;
-import net.minecraft.entity.boss.BossBar;
-import net.minecraft.scoreboard.Scoreboard;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket;
 import net.minecraft.scoreboard.ServerScoreboard;
 import net.minecraft.scoreboard.Team;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.util.Colors;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.ColorHelper;
-import org.jetbrains.annotations.Nullable;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ConfigHandler {
 
     private Map<String, Formatting> specmap = new HashMap<>();
     private Map<String, Text> pvpmap = new HashMap<>();
+    private Map<String, Text> names = new HashMap<>();
     private List<Team> teams = new ArrayList<>();
 
     public final MinecraftServer server;
@@ -51,15 +43,86 @@ public class ConfigHandler {
             sb.addPlayerToTeam(playerEntity.getName().getString(), t);
         }
     }
+    public Text DecorateName(String name){
+        return this.names.containsKey(name) ? this.names.get(name) : Text.of(name);
+    }
+    private float normalize(float value, float min, float max) {
+        if (min >= max) {
+            throw new IllegalArgumentException("Minimum value must be less than maximum value");
+        }
+
+        value = Math.max(min, Math.min(max, value));
+
+        return (value - min) / (max - min);
+    }
+
     public void SetSpec(ServerPlayerEntity playerEntity, String spec){
         this.RefreshTeam(playerEntity);
         Team t = this.server.getScoreboard().getTeam(playerEntity.getUuidAsString());
         assert t != null;
 
-        if(!this.specmap.containsKey(spec)){
-            return;
+        String entname = playerEntity.getEntityName();
+
+        List<String> a = new ArrayList<>(Arrays.stream(spec.split(",")).toList());
+
+        a.removeIf(tas -> tas.contains("none"));
+
+        Text prefix = Text.empty();
+
+        int i = 1;
+        int mi = 0;
+        int en = entname.length()/2;
+        float prevend = 0;
+
+        for (String ts : a){
+            if(!this.specmap.containsKey(ts)){
+                break;
+            }
+            if(a.size() == 1){
+                prefix = Text.of(entname);
+                t.setColor(this.specmap.get(ts));
+                break;
+            }
+
+            String ns = entname.substring(mi, en);
+
+            mi = en;
+            en = entname.length();
+
+            Text te = Text.empty();
+
+            float temprev = 0;
+            for (int ie = 0; ie < ns.length(); ie++){
+                float normalized = normalize(ie, 0, ns.length());
+                normalized /= 2;
+                normalized += prevend;
+                temprev = normalized;
+                int col = ColorHelper.Argb.lerp(normalized, this.specmap.get(a.get(0)).getColorValue(), this.specmap.get(a.get(1)).getColorValue());
+
+
+                te = te.copy().append(Text.of(String.valueOf(ns.charAt(ie))).getWithStyle(Style.EMPTY.withColor(col)).get(0));
+            }
+            prevend = temprev;
+
+
+            prefix = prefix.copy().append(te);
+
+            i++;
         }
-        t.setColor(this.specmap.get(spec));
+
+        if(a.isEmpty()){
+            t.setColor(Formatting.WHITE);
+            prefix = playerEntity.getName();
+        }
+
+        prefix = t.decorateName(prefix);
+
+        this.names.put(entname, prefix);
+
+        playerEntity.setCustomName(prefix);
+        playerEntity.setCustomNameVisible(true);
+
+        Objects.requireNonNull(playerEntity.getServer()).getPlayerManager().sendToAll(new PlayerListS2CPacket(PlayerListS2CPacket.Action.UPDATE_DISPLAY_NAME, playerEntity));
     }
     public void SetPvp(ServerPlayerEntity playerEntity, String pvp){
         this.RefreshTeam(playerEntity);
@@ -67,6 +130,8 @@ public class ConfigHandler {
         assert t != null;
         if(this.pvpmap.containsKey(pvp)){
             t.setSuffix(this.pvpmap.get(pvp));
+        }else{
+            t.setSuffix(Text.empty());
         }
     }
 
