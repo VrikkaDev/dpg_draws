@@ -14,7 +14,12 @@ public class ServerPlayerEntityMixin {
     @Inject(method = "getPlayerListName", at = @At("TAIL"), cancellable = true)
     private void gpln(CallbackInfoReturnable<Text> cir){
         ServerPlayerEntity ent = ((ServerPlayerEntity) (Object) this);
-        cir.setReturnValue(Variables.configHandler.DecorateName(ent.getEntityName()));
+
+        if(ent.getScoreboardTeam() == null){
+            cir.setReturnValue(Variables.configHandler.DecorateName(ent.getEntityName()));
+            return;
+        }
+        cir.setReturnValue(ent.getScoreboardTeam().decorateName(Variables.configHandler.DecorateName(ent.getEntityName())));
     }
 
 }

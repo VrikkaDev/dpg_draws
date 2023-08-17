@@ -115,7 +115,6 @@ public class ConfigHandler {
             prefix = playerEntity.getName();
         }
 
-        prefix = t.decorateName(prefix);
 
         this.names.put(entname, prefix);
 
@@ -133,6 +132,7 @@ public class ConfigHandler {
         }else{
             t.setSuffix(Text.empty());
         }
+        Objects.requireNonNull(playerEntity.getServer()).getPlayerManager().sendToAll(new PlayerListS2CPacket(PlayerListS2CPacket.Action.UPDATE_DISPLAY_NAME, playerEntity));
     }
 
     public void loadFromJsonObject(JsonObject root){
