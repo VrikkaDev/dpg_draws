@@ -63,6 +63,10 @@ class Linking_Handler:
         if type(prof.data) == type(str):
             prof.data = json.loads(prof.data)
 
+        if "spec" not in prof.data.keys():
+            prof.data["spec"] = team
+            return
+
         if team not in prof.data["spec"]:
             prof.data["spec"] += "," + team
             self.Set_profile(prof)
