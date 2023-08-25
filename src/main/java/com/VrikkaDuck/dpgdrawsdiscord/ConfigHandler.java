@@ -19,6 +19,7 @@ public class ConfigHandler {
     private Map<String, Formatting> specmap = new HashMap<>();
     private Map<String, Text> pvpmap = new HashMap<>();
     private Map<String, Text> names = new HashMap<>();
+    private Map<String, Text> pvps = new HashMap<>();
     private List<Team> teams = new ArrayList<>();
 
     public final MinecraftServer server;
@@ -44,7 +45,11 @@ public class ConfigHandler {
         }
     }
     public Text DecorateName(String name){
-        return this.names.containsKey(name) ? this.names.get(name) : Text.of(name);
+
+        Text t = this.pvps.containsKey(name) ? this.pvps.get(name) : Text.empty();
+        Text n = this.names.containsKey(name) ? this.names.get(name) : Text.of(name);
+
+        return Text.empty().append(n).append(" ").append(t);
     }
     private float normalize(float value, float min, float max) {
         if (min >= max) {
@@ -128,9 +133,11 @@ public class ConfigHandler {
         Team t = this.server.getScoreboard().getTeam(playerEntity.getUuidAsString());
         assert t != null;
         if(this.pvpmap.containsKey(pvp)){
-            t.setSuffix(this.pvpmap.get(pvp));
+            //t.setSuffix(this.pvpmap.get(pvp));
+            this.pvps.put(playerEntity.getEntityName(), this.pvpmap.get(pvp));
         }else{
             t.setSuffix(Text.empty());
+            this.pvps.put(playerEntity.getEntityName(), Text.empty());
         }
         Objects.requireNonNull(playerEntity.getServer()).getPlayerManager().sendToAll(new PlayerListS2CPacket(PlayerListS2CPacket.Action.UPDATE_DISPLAY_NAME, playerEntity));
     }

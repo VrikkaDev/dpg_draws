@@ -73,7 +73,7 @@ public class LinkAccountPacket extends Packet{
 
         Objects.requireNonNull(server.getPlayerManager().getPlayer(this.minecraft_name)).sendMessageToClient(t, false);
 
-        Variables.WAITING_TO_GET_LINKED.put(this.discord_id, new String[]{this.discord_name, this.minecraft_name});
+        Variables.WAITING_TO_GET_VERIFIED.put(this.discord_id, new String[]{this.discord_name, this.minecraft_name});
 
         return genJson(true, "message_sent_to_player");
     }
