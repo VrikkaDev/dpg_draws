@@ -27,6 +27,7 @@ public abstract class PlayerEntityMixin {
             Variables.configHandler = new ConfigHandler(server);
         }
 
-        return Variables.configHandler.DecorateName(ent.getEntityName());
+        return Variables.configHandler.DecorateName(ent.getName().getString());
+        //return Variables.configHandler.DecorateName(ent.getEntityName());
     }
 }

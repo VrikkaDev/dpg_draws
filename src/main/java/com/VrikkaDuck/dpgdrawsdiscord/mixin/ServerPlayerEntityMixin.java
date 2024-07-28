@@ -16,10 +16,12 @@ public class ServerPlayerEntityMixin {
         ServerPlayerEntity ent = ((ServerPlayerEntity) (Object) this);
 
         if(ent.getScoreboardTeam() == null){
-            cir.setReturnValue(Variables.configHandler.DecorateName(ent.getEntityName()));
+            cir.setReturnValue(Variables.configHandler.DecorateName(ent.getName().getString()));
+            //cir.setReturnValue(Variables.configHandler.DecorateName(ent.getEntityName()));
             return;
         }
-        cir.setReturnValue(ent.getScoreboardTeam().decorateName(Variables.configHandler.DecorateName(ent.getEntityName())));
+        cir.setReturnValue(ent.getScoreboardTeam().decorateName(Variables.configHandler.DecorateName(ent.getName().getString())));
+        //cir.setReturnValue(ent.getScoreboardTeam().decorateName(Variables.configHandler.DecorateName(ent.getEntityName())));
     }
 
 }

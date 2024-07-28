@@ -41,7 +41,8 @@ public class ConfigHandler {
         }
 
         if(!playerEntity.isTeamPlayer(t)){
-            sb.addPlayerToTeam(playerEntity.getName().getString(), t);
+            sb.addScoreHolderToTeam(playerEntity.getName().getString(), t);
+            //sb.addPlayerToTeam(playerEntity.getName().getString(), t);
         }
     }
     public Text DecorateName(String name){
@@ -66,7 +67,8 @@ public class ConfigHandler {
         Team t = this.server.getScoreboard().getTeam(playerEntity.getUuidAsString());
         assert t != null;
 
-        String entname = playerEntity.getEntityName();
+        String entname = playerEntity.getName().getString();
+        //String entname = playerEntity.getEntityName();
 
         List<String> a = new ArrayList<>(Arrays.stream(spec.split(",")).toList());
 
@@ -133,11 +135,12 @@ public class ConfigHandler {
         Team t = this.server.getScoreboard().getTeam(playerEntity.getUuidAsString());
         assert t != null;
         if(this.pvpmap.containsKey(pvp)){
-            //t.setSuffix(this.pvpmap.get(pvp));
-            this.pvps.put(playerEntity.getEntityName(), this.pvpmap.get(pvp));
+            this.pvps.put(playerEntity.getName().getString(), this.pvpmap.get(pvp));
+            //this.pvps.put(playerEntity.getEntityName(), this.pvpmap.get(pvp));
         }else{
             t.setSuffix(Text.empty());
-            this.pvps.put(playerEntity.getEntityName(), Text.empty());
+            this.pvps.put(playerEntity.getName().getString(), Text.empty());
+            //this.pvps.put(playerEntity.getEntityName(), Text.empty());
         }
         Objects.requireNonNull(playerEntity.getServer()).getPlayerManager().sendToAll(new PlayerListS2CPacket(PlayerListS2CPacket.Action.UPDATE_DISPLAY_NAME, playerEntity));
     }

@@ -1,5 +1,6 @@
 package com.VrikkaDuck.dpgdrawsdiscord.utils;
 
+
 import com.google.gson.*;
 import org.jetbrains.annotations.Nullable;
 
@@ -20,6 +21,7 @@ public class JsonUtils {
         }
         else
         {
+
             return parent.get(key).getAsJsonObject();
         }
     }
